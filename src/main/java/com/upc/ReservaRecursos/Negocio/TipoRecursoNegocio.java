@@ -21,6 +21,6 @@ public class TipoRecursoNegocio implements ITipoRecursoNegocio{
     @Override
     public TipoRecurso buscar(Integer id) throws Exception {
         return iTipoRecursoRepositorio.findById(id).orElseThrow(
-                () -> new Exception("No se encontró tipo recurso"));
+                () -> new Exception("El tipo de recurso ingresado no existe"));
     }
 }

@@ -20,30 +20,24 @@ public class RecursoNegocio implements IRecursoNegocio{
 
     @Override
     public Recurso registrar(Recurso recurso) throws Exception {
-        //TipoRecursoNegocio tipoRecursoNegocio = new TipoRecursoNegocio();
-        //tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
         return iRecursoRepositorio.save(recurso);
     }
 
     @Override
     public Recurso buscar(Integer id) throws Exception {
         return iRecursoRepositorio.findById(id).orElseThrow(
-                () -> new Exception("No se encontró recurso"));
+                () -> new Exception("El recurso no existe"));
     }
 
     @Override
     public Recurso actualizar(Recurso recurso) throws Exception {
-        //TipoRecursoNegocio tipoRecursoNegocio = new TipoRecursoNegocio();
         buscar(recurso.getId());
-        //tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
         return iRecursoRepositorio.save(recurso);
     }
 
     @Override
     public Recurso deshabilitar(Recurso recurso) throws Exception {
-        //TipoRecursoNegocio tipoRecursoNegocio = new TipoRecursoNegocio();
         buscar(recurso.getId());
-        //tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
         return iRecursoRepositorio.save(recurso);
     }
 }

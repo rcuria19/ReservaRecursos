@@ -2,6 +2,7 @@ package com.upc.ReservaRecursos.Rest;
 
 import com.upc.ReservaRecursos.Entidades.Recurso;
 import com.upc.ReservaRecursos.Negocio.IRecursoNegocio;
+import com.upc.ReservaRecursos.Negocio.ITipoRecursoNegocio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,9 @@ public class RecursoRest {
     @Autowired
     private IRecursoNegocio recursoNegocio;
 
+    @Autowired
+    private ITipoRecursoNegocio tipoRecursoNegocio;
+
     @GetMapping("/recursos")
     public List<Recurso> lista(){
         return recursoNegocio.listado();
@@ -24,10 +28,10 @@ public class RecursoRest {
     public Recurso registrar(@RequestBody Recurso recurso){
         Recurso p;
         try {
+            tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
             p = recursoNegocio.registrar(recurso);
         }catch (Exception e){
-            //logger.error("Error en registro", e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Se presentó un error al registrar el recurso",e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
         return p;
     }
@@ -36,10 +40,11 @@ public class RecursoRest {
     public Recurso actualizar(@RequestBody Recurso recurso){
         Recurso p;
         try {
+            tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
+            recursoNegocio.buscar(recurso.getId());
             p = recursoNegocio.actualizar(recurso);
         }catch (Exception e){
-            //logger.error("Error en registro", e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Se presentó un error al actualizar el recurso",e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
         return p;
     }
@@ -48,10 +53,13 @@ public class RecursoRest {
     public Recurso deshabilitar(@RequestBody Recurso recurso){
         Recurso p;
         try {
+            tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
+            recursoNegocio.buscar(recurso.getId());
+            recurso.setEstado(false);
             p = recursoNegocio.deshabilitar(recurso);
         }catch (Exception e){
             //logger.error("Error en registro", e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Se presentó un error al deshabilitar el recurso",e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
         return p;
     }
