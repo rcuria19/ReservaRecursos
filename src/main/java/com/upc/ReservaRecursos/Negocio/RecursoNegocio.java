@@ -40,4 +40,12 @@ public class RecursoNegocio implements IRecursoNegocio{
         buscar(recurso.getId());
         return iRecursoRepositorio.save(recurso);
     }
+
+    @Override
+    public void eliminar(Recurso recurso) throws Exception {
+        buscar(recurso.getId());
+        iRecursoRepositorio.deleteById(recurso.getId());
+    }
+
+
 }

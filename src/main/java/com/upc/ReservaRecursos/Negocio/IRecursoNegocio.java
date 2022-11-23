@@ -11,4 +11,5 @@ public interface IRecursoNegocio {
     public Recurso buscar(Integer id) throws Exception;
     public Recurso actualizar(Recurso recurso) throws  Exception;
     public Recurso deshabilitar(Recurso recurso) throws  Exception;
+    public void eliminar(Recurso recurso) throws  Exception;
 }
