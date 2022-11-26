@@ -37,37 +37,39 @@ public class RecursoRest {
     }
 
     @PostMapping("/registrarRecurso")
-    public Recurso registrar(@RequestBody Recurso recurso){
-        Recurso p;
+    public ResponseEntity<?> registrar(@RequestBody Recurso recurso){
+        Map<String, Object> response = new HashMap<>();
         try {
             tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
-            p = recursoNegocio.registrar(recurso);
+            recursoNegocio.registrar(recurso);
+            response.put("mensaje", "Recurso registrado con éxito!");
+            return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
-        return p;
     }
 
     @PutMapping("/actualizarRecurso")
-    public Recurso actualizar(@RequestBody Recurso recurso){
-        Recurso p;
+    public ResponseEntity<?> actualizar(@RequestBody Recurso recurso){
+        Map<String, Object> response = new HashMap<>();
         try {
             tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
-            p = recursoNegocio.actualizar(recurso);
+            recursoNegocio.actualizar(recurso);
+            response.put("mensaje", "Recurso actualizado con éxito!");
+            return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
-        return p;
     }
 
     @DeleteMapping("/eliminarRecurso/{id_recurso}")
     public ResponseEntity<?> eliminar(@PathVariable(value = "id_recurso") Integer id){
         Recurso recurso;
+        Map<String, Object> response = new HashMap<>();
         try {
-            Map<String, Object> response = new HashMap<>();
             recurso = recursoNegocio.buscar(id);
             recursoNegocio.eliminar(recurso);
-            response.put("mensaje", "Recurso eliminado con exito!");
+            response.put("mensaje", "Recurso eliminado con éxito!");
             return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
         }catch (Exception e){
             //logger.error("Error en registro", e);

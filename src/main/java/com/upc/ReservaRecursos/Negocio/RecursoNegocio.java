@@ -19,8 +19,8 @@ public class RecursoNegocio implements IRecursoNegocio{
     }
 
     @Override
-    public Recurso registrar(Recurso recurso) throws Exception {
-        return iRecursoRepositorio.save(recurso);
+    public void registrar(Recurso recurso) throws Exception {
+        iRecursoRepositorio.save(recurso);
     }
 
     @Override
@@ -30,20 +30,13 @@ public class RecursoNegocio implements IRecursoNegocio{
     }
 
     @Override
-    public Recurso actualizar(Recurso recurso) throws Exception {
+    public void actualizar(Recurso recurso) throws Exception {
         buscar(recurso.getId());
-        return iRecursoRepositorio.save(recurso);
-    }
-
-    @Override
-    public Recurso deshabilitar(Recurso recurso) throws Exception {
-        buscar(recurso.getId());
-        return iRecursoRepositorio.save(recurso);
+        iRecursoRepositorio.save(recurso);
     }
 
     @Override
     public void eliminar(Recurso recurso) throws Exception {
-        buscar(recurso.getId());
         iRecursoRepositorio.deleteById(recurso.getId());
     }
 
