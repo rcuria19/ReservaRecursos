@@ -27,6 +27,15 @@ public class RecursoRest {
         return recursoNegocio.listado();
     }
 
+    @GetMapping("/recurso/{id_recurso}")
+    public Recurso buscar(@PathVariable(value = "id_recurso") Integer id){
+        try {
+            return recursoNegocio.buscar(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
+        }
+    }
+
     @PostMapping("/registrarRecurso")
     public Recurso registrar(@RequestBody Recurso recurso){
         Recurso p;
@@ -39,12 +48,11 @@ public class RecursoRest {
         return p;
     }
 
-    @PostMapping("/actualizarRecurso")
+    @PutMapping("/actualizarRecurso")
     public Recurso actualizar(@RequestBody Recurso recurso){
         Recurso p;
         try {
             tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
-            recursoNegocio.buscar(recurso.getId());
             p = recursoNegocio.actualizar(recurso);
         }catch (Exception e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
@@ -52,27 +60,12 @@ public class RecursoRest {
         return p;
     }
 
-    @PostMapping("/deshabilitarRecurso")
-    public Recurso deshabilitar(@RequestBody Recurso recurso){
-        Recurso p;
-        try {
-            tipoRecursoNegocio.buscar(recurso.getIdTipoRecurso());
-            recursoNegocio.buscar(recurso.getId());
-            recurso.setEstado(false);
-            p = recursoNegocio.deshabilitar(recurso);
-        }catch (Exception e){
-            //logger.error("Error en registro", e);
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
-        }
-        return p;
-    }
-
-    @PostMapping("/eliminarRecurso")
-    public ResponseEntity<?> eliminar(@RequestBody Recurso recurso){
-        Recurso p;
+    @DeleteMapping("/eliminarRecurso/{id_recurso}")
+    public ResponseEntity<?> eliminar(@PathVariable(value = "id_recurso") Integer id){
+        Recurso recurso;
         try {
             Map<String, Object> response = new HashMap<>();
-            p = recursoNegocio.buscar(recurso.getId());
+            recurso = recursoNegocio.buscar(id);
             recursoNegocio.eliminar(recurso);
             response.put("mensaje", "Recurso eliminado con exito!");
             return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
