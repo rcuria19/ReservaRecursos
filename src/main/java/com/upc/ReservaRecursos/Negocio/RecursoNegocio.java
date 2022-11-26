@@ -3,9 +3,11 @@ package com.upc.ReservaRecursos.Negocio;
 import com.upc.ReservaRecursos.Entidades.Recurso;
 import com.upc.ReservaRecursos.Repositorio.IRecursoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
 public class RecursoNegocio implements IRecursoNegocio{
@@ -14,8 +16,8 @@ public class RecursoNegocio implements IRecursoNegocio{
     IRecursoRepositorio iRecursoRepositorio;
 
     @Override
-    public List<Recurso> listado() {
-        return iRecursoRepositorio.findAll();
+    public Page<Recurso> listado(Pageable pageable) {
+        return iRecursoRepositorio.findAll(pageable);
     }
 
     @Override

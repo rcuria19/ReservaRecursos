@@ -14,13 +14,5 @@ class ReservaRecursosApplicationTests {
 	@Autowired
 	private IRecursoNegocio iRecursoNegocio;
 
-	@Test
-	void contextLoads() {
-	}
-
-	@Test
-	void testListado(){
-		iRecursoNegocio.listado();
-	}
 
 }
