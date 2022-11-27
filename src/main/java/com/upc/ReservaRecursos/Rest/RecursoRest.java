@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,7 +29,7 @@ public class RecursoRest {
         return recursoNegocio.listado(pageable);
     }
 
-    @GetMapping("/recurso/{id_recurso}")
+    @GetMapping("/recursos/{id_recurso}")
     public Recurso buscar(@PathVariable(value = "id_recurso") Integer id){
         try {
             return recursoNegocio.buscar(id);
@@ -39,7 +38,7 @@ public class RecursoRest {
         }
     }
 
-    @PostMapping("/registrarRecurso")
+    @PostMapping("/recursos")
     public ResponseEntity<?> registrar(@RequestBody Recurso recurso){
         Map<String, Object> response = new HashMap<>();
         try {
@@ -52,7 +51,7 @@ public class RecursoRest {
         }
     }
 
-    @PutMapping("/actualizarRecurso")
+    @PutMapping("/recursos")
     public ResponseEntity<?> actualizar(@RequestBody Recurso recurso){
         Map<String, Object> response = new HashMap<>();
         try {
@@ -65,7 +64,7 @@ public class RecursoRest {
         }
     }
 
-    @DeleteMapping("/eliminarRecurso/{id_recurso}")
+    @DeleteMapping("/recursos/{id_recurso}")
     public ResponseEntity<?> eliminar(@PathVariable(value = "id_recurso") Integer id){
         Recurso recurso;
         Map<String, Object> response = new HashMap<>();
