@@ -1,11 +1,11 @@
 package com.upc.ReservaRecursos.Negocio;
-
 import com.upc.ReservaRecursos.Entidades.TipoRecurso;
+
 import com.upc.ReservaRecursos.Repositorio.ITipoRecursoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class TipoRecursoNegocio implements ITipoRecursoNegocio{
@@ -14,8 +14,8 @@ public class TipoRecursoNegocio implements ITipoRecursoNegocio{
     ITipoRecursoRepositorio iTipoRecursoRepositorio;
 
     @Override
-    public List<TipoRecurso> listado() {
-        return iTipoRecursoRepositorio.findAll();
+    public Page<TipoRecurso> listado(Pageable pageable) {
+        return iTipoRecursoRepositorio.findAll(pageable);
     }
 
     @Override
