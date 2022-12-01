@@ -1,6 +1,5 @@
 package com.upc.ReservaRecursos.Negocio;
 
-import com.upc.ReservaRecursos.Entidades.Recurso;
 import com.upc.ReservaRecursos.Entidades.TipoRecurso;
 
 import java.util.List;
