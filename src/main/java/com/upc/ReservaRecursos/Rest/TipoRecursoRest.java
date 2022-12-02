@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -33,6 +34,7 @@ public class TipoRecursoRest {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/tiposRecurso")
     public ResponseEntity<?> registrar(@RequestBody TipoRecurso tipoRecurso){
         Map<String, Object> response = new HashMap<>();
@@ -45,6 +47,7 @@ public class TipoRecursoRest {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/tiposRecurso")
     public ResponseEntity<?> actualizar(@RequestBody TipoRecurso tipoRecurso){
         Map<String, Object> response = new HashMap<>();
@@ -57,6 +60,7 @@ public class TipoRecursoRest {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/tiposRecurso/{id_tipo_recurso}")
     public ResponseEntity<?> eliminar(@PathVariable(value = "id_tipo_recurso") Integer id){
         TipoRecurso tipoRecurso;

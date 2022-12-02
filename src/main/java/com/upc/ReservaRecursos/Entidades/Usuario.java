@@ -22,7 +22,7 @@ public class Usuario {
     @Column(name = "nombre")
     private String nombre;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     // join columns hace referencia a la columna que hace referencia hacia esta
     // Es decir la tabla usuario_rol va a tener un campo que se llama id_usuario
     // inverseJoinColumns = el inverso, hace referencia a rol
