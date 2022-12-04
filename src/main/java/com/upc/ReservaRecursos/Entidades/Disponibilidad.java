@@ -18,13 +18,18 @@ public class Disponibilidad {
     @Column(name = "hora_fin")
     private Time horaFin;
 
+    @Column(name = "dia")
+    private Integer dia;
+
     public Disponibilidad() {
     }
 
-    public Disponibilidad(Integer id, Time horaInicio, Time horaFin) {
+    public Disponibilidad(Integer id, Time horaInicio, Time horaFin, Integer dia) {
         this.id = id;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
+        this.dia = dia;
+
     }
 
     public Integer getId() {
@@ -49,5 +54,13 @@ public class Disponibilidad {
 
     public void setHoraFin(Time horaFin) {
         this.horaFin = horaFin;
+    }
+
+    public Integer getDia() {
+        return dia;
+    }
+
+    public void setDia(Integer dia) {
+        this.dia = dia;
     }
 }
