@@ -10,4 +10,6 @@ public interface IUsuarioNegocio extends UserDetailsService {
 
     public void registrar(Usuario usuario)throws  Exception;
 
+    public Usuario buscar(Integer id) throws Exception;
+
 }

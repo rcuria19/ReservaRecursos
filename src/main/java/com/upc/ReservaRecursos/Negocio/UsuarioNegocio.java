@@ -22,6 +22,12 @@ public class UsuarioNegocio implements IUsuarioNegocio{
     }
 
     @Override
+    public Usuario buscar(Integer id) throws Exception {
+        return iUsuarioRepositorio.findById(id).orElseThrow(
+                () -> new Exception("El usuario no existe"));
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = iUsuarioRepositorio.findByUsuario(username).get();
         return UsuarioMain.build(usuario);
