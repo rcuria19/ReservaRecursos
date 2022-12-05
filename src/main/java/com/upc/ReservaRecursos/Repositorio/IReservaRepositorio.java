@@ -9,5 +9,6 @@ public interface IReservaRepositorio extends JpaRepository<Reserva, Integer> {
 
     Page<Reserva> findByEstado(Integer estado, Pageable pageable);
 
+    Page<Reserva> findByIdUsuarioAndEstado(Integer idUsuario, Integer estado, Pageable pageable);
 
 }

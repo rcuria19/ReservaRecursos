@@ -2,11 +2,12 @@ package com.upc.ReservaRecursos.Negocio;
 
 import com.upc.ReservaRecursos.Entidades.Reserva;
 import com.upc.ReservaRecursos.Repositorio.IReservaRepositorio;
-import com.upc.ReservaRecursos.Repositorio.IUsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReservaNegocio implements IReservaNegocio{
@@ -36,6 +37,11 @@ public class ReservaNegocio implements IReservaNegocio{
     @Override
     public Page<Reserva> consultaReservas(Pageable pageable) {
         return iReservaRepositorio.findByEstado(1, pageable);
+    }
+
+    @Override
+    public Page<Reserva> consultarReservasUsuario(Integer idUsuario,Pageable pageable) {
+        return iReservaRepositorio.findByIdUsuarioAndEstado(idUsuario,1, pageable);
     }
 
     @Override

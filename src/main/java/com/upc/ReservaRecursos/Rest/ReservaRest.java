@@ -1,6 +1,5 @@
 package com.upc.ReservaRecursos.Rest;
 
-import com.upc.ReservaRecursos.Entidades.Recurso;
 import com.upc.ReservaRecursos.Entidades.Reserva;
 import com.upc.ReservaRecursos.Negocio.IRecursoNegocio;
 import com.upc.ReservaRecursos.Negocio.IReservaNegocio;
@@ -15,9 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -42,6 +40,15 @@ public class ReservaRest {
     public Reserva buscar(@PathVariable(value = "id_reserva") Integer id){
         try {
             return reservaNegocio.obtenerReserva(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
+        }
+    }
+
+    @GetMapping("/reservasUsuario/{id_usuario}")
+    public Page<Reserva> buscarReservasUsuario(@PathVariable(value = "id_usuario") Integer id, @PageableDefault(size = 10, page = 0) Pageable pageable){
+        try {
+            return reservaNegocio.consultarReservasUsuario(id,pageable);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage(),e);
         }
