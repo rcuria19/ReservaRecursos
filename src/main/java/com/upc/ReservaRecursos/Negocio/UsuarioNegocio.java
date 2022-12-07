@@ -17,14 +17,25 @@ public class UsuarioNegocio implements IUsuarioNegocio{
     IUsuarioRepositorio iUsuarioRepositorio;
 
     @Override
+    public Usuario buscar(Integer id) throws Exception {
+        return iUsuarioRepositorio.findById(id).orElseThrow(
+                () -> new Exception("El usuario no existe"));
+    }
+
+    @Override
     public void registrar(Usuario usuario) throws Exception {
         iUsuarioRepositorio.save(usuario);
     }
 
     @Override
-    public Usuario buscar(Integer id) throws Exception {
-        return iUsuarioRepositorio.findById(id).orElseThrow(
-                () -> new Exception("El usuario no existe"));
+    public void actualizar(Usuario usuario) throws Exception {
+        buscar(usuario.getId());
+        iUsuarioRepositorio.save(usuario);
+    }
+
+    @Override
+    public void eliminar(Usuario usuario) throws Exception {
+        iUsuarioRepositorio.deleteById(usuario.getId());
     }
 
     @Override
