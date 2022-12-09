@@ -1,11 +1,13 @@
 package com.upc.ReservaRecursos.Rest;
 
-import com.upc.ReservaRecursos.Entidades.Recurso;
 import com.upc.ReservaRecursos.Entidades.Rol;
 import com.upc.ReservaRecursos.Entidades.Usuario;
 import com.upc.ReservaRecursos.Negocio.IRolNegocio;
 import com.upc.ReservaRecursos.Negocio.IUsuarioNegocio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,17 @@ public class UsuarioRest {
     @Autowired
     private IRolNegocio rolNegocio;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/Usuario")
+    public Page<Usuario> lista(@PageableDefault(size = 10, page = 0) Pageable pageable){
+        return usuarioNegocio.listado(pageable);
+    }
+    @GetMapping("/roles")
+    public Page<Rol> listaRoles(@PageableDefault(size = 10, page = 0) Pageable pageable){
+        return rolNegocio.listado(pageable);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/Usuario")
     public ResponseEntity<?> registrar(@Valid @RequestBody Usuario nuevoUsuario){
@@ -44,7 +57,9 @@ public class UsuarioRest {
             }
 
             Usuario usuario = new Usuario(nuevoUsuario.getId(), nuevoUsuario.getUsuario(),
-                    passwordEncoder.encode(nuevoUsuario.getContraseña()), nuevoUsuario.getNombre());
+                    passwordEncoder.encode("123456"), nuevoUsuario.getNombre(), nuevoUsuario.getSexo(), nuevoUsuario.getFechaNacimiento());
+            System.out.println(roles);
+            System.out.println("roles...........................");
             usuario.setRoles(roles);
             usuarioNegocio.registrar(usuario);
             response.put("mensaje", "Usuario registrado con éxito!");
@@ -68,8 +83,7 @@ public class UsuarioRest {
                 roles.add(r);
             }
 
-            Usuario usuario = new Usuario(nuevoUsuario.getId(), nuevoUsuario.getUsuario(),
-                    passwordEncoder.encode(nuevoUsuario.getContraseña()), nuevoUsuario.getNombre());
+            Usuario usuario = new Usuario(nuevoUsuario.getId(), nuevoUsuario.getUsuario(), nuevoUsuario.getNombre(), nuevoUsuario.getSexo(), nuevoUsuario.getFechaNacimiento());
             usuario.setRoles(roles);
             usuarioNegocio.actualizar(usuario);
             response.put("mensaje", "Usuario actualizado con éxito!");

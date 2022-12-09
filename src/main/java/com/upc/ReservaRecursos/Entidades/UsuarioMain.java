@@ -32,7 +32,7 @@ public class UsuarioMain implements UserDetails {
                         .stream()
                         .map(rol -> new SimpleGrantedAuthority(rol.getRol()))
                         .collect(Collectors.toList());
-        return new UsuarioMain(usuario.getUsuario(), usuario.getContraseña(), usuario.getNombre(), authorities);
+        return new UsuarioMain(usuario.getUsuario(), usuario.getPassword(), usuario.getNombre(), authorities);
     }
 
     @Override

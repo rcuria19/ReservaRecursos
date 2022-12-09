@@ -1,6 +1,9 @@
 package com.upc.ReservaRecursos.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,10 +20,18 @@ public class Usuario {
     private String usuario;
 
     @Column(name = "contraseña")
-    private String contraseña;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "fecha_nacimiento")
+    private Date fechaNacimiento;
+
+    @Column(name = "sexo")
+    private String sexo;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     // join columns hace referencia a la columna que hace referencia hacia esta
@@ -33,13 +44,38 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer id, String usuario, String contraseña, String nombre) {
+    public Usuario(Integer id, String usuario, String password, String nombre, String sexo, Date fechaNacimiento) {
         this.id = id;
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.password = password;
         this.nombre = nombre;
+        this.sexo = sexo;
+        this.fechaNacimiento = fechaNacimiento;
     }
 
+    public Usuario(Integer id, String usuario, String nombre, String sexo, Date fechaNacimiento) {
+        this.id = id;
+        this.usuario = usuario;
+        this.nombre = nombre;
+        this.sexo = sexo;
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
     public Integer getId() {
         return id;
     }
@@ -56,12 +92,12 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNombre() {
