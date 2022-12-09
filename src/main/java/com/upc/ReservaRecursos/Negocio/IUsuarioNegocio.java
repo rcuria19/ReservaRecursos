@@ -10,6 +10,7 @@ public interface IUsuarioNegocio extends UserDetailsService {
 
     public Page<Usuario> listado(Pageable pageable);
     public Usuario buscar(Integer id) throws Exception;
+    public Usuario buscarPorUsername(String username) throws Exception;
     public void registrar(Usuario usuario)throws  Exception;
     public void actualizar(Usuario usuario) throws  Exception;
     public void eliminar(Usuario usuario) throws  Exception;

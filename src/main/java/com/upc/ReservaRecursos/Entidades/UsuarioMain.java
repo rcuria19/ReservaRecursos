@@ -11,16 +11,16 @@ import java.util.stream.Collectors;
 public class UsuarioMain implements UserDetails {
 
     private String usuario;
-    private String contraseña;
+    private String password;
     private String nombre;
     // Variable que nos da la autorización (no confundir con autenticación)
     // Coleccion de tipo generico que extendiende
     // de GranthedAuthority de Spring security
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioMain(String usuario, String contraseña, String nombre, Collection<? extends GrantedAuthority> authorities) {
+    public UsuarioMain(String usuario, String password, String nombre, Collection<? extends GrantedAuthority> authorities) {
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.password = password;
         this.nombre = nombre;
         this.authorities = authorities;
     }
@@ -42,7 +42,7 @@ public class UsuarioMain implements UserDetails {
 
     @Override
     public String getPassword() {
-        return contraseña;
+        return password;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.upc.ReservaRecursos.Rest;
 
+import com.upc.ReservaRecursos.Entidades.Usuario;
+import com.upc.ReservaRecursos.Negocio.IUsuarioNegocio;
 import com.upc.ReservaRecursos.Seguridad.DTO.JwtDto;
 import com.upc.ReservaRecursos.Seguridad.DTO.Mensaje;
 import com.upc.ReservaRecursos.Seguridad.DTO.UsuarioLogin;
@@ -31,12 +33,13 @@ public class AuthRest {
     @Autowired
     AuthenticationManager authenticationManager;
 
-
+    @Autowired
+    private IUsuarioNegocio usuarioNegocio;
     @Autowired
     JwtProvider jwtProvider;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtDto> login(@Valid @RequestBody UsuarioLogin usuario, BindingResult bindingResult){
+    public ResponseEntity<JwtDto> login(@Valid @RequestBody UsuarioLogin usuario, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors())
             return new ResponseEntity(new Mensaje("Campos mal"), HttpStatus.BAD_REQUEST);
         Authentication authentication =
@@ -44,8 +47,20 @@ public class AuthRest {
                         new UsernamePasswordAuthenticationToken(usuario.getNombreUsuario(),
                                 usuario.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtProvider.generateToken(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        Usuario user = usuarioNegocio.buscarPorUsername(userDetails.getUsername());
+
+        String jwt = jwtProvider.generateToken(authentication, user);
+        System.out.println(authentication);
+
+        System.out.println("-------------------------------------------");
+
+
+
+        System.out.println(user.getId());
+        System.out.println("-------------------------------------------");
+
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity<>(jwtDto, HttpStatus.OK);
     }

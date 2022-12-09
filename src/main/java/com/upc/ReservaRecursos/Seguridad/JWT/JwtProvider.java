@@ -1,5 +1,6 @@
 package com.upc.ReservaRecursos.Seguridad.JWT;
 
+import com.upc.ReservaRecursos.Entidades.Usuario;
 import com.upc.ReservaRecursos.Entidades.UsuarioMain;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -9,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtProvider {
@@ -23,9 +26,15 @@ public class JwtProvider {
     @Value("${jwt.expiration}")
     private int expiration;
 
-    public String generateToken(Authentication authentication){
+    public String generateToken(Authentication authentication, Usuario user){
         UsuarioMain usuarioMain = (UsuarioMain) authentication.getPrincipal();
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getId());
+        claims.put("nombre", user.getNombre());
+        claims.put("fechaNacimiento", user.getFechaNacimiento());
+        claims.put("sexo", user.getSexo());
         return Jwts.builder().setSubject(usuarioMain.getUsername())
+                .addClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)

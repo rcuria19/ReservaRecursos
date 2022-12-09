@@ -82,8 +82,8 @@ public class UsuarioRest {
                 rolNegocio.buscar(r.getId());
                 roles.add(r);
             }
-
-            Usuario usuario = new Usuario(nuevoUsuario.getId(), nuevoUsuario.getUsuario(), nuevoUsuario.getNombre(), nuevoUsuario.getSexo(), nuevoUsuario.getFechaNacimiento());
+            Usuario user = usuarioNegocio.buscar(nuevoUsuario.getId());
+            Usuario usuario = new Usuario(nuevoUsuario.getId(), nuevoUsuario.getUsuario(), user.getPassword(), nuevoUsuario.getNombre(), nuevoUsuario.getSexo(), nuevoUsuario.getFechaNacimiento());
             usuario.setRoles(roles);
             usuarioNegocio.actualizar(usuario);
             response.put("mensaje", "Usuario actualizado con éxito!");

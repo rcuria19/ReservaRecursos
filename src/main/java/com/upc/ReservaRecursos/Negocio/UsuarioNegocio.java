@@ -29,6 +29,13 @@ public class UsuarioNegocio implements IUsuarioNegocio{
     }
 
     @Override
+    public Usuario buscarPorUsername(String username) throws Exception {
+        return iUsuarioRepositorio.findByUsuario(username).orElseThrow(
+                () -> new Exception("El usuario no existe"));
+    }
+
+
+    @Override
     public void registrar(Usuario usuario) throws Exception {
         iUsuarioRepositorio.save(usuario);
     }
