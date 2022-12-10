@@ -1,6 +1,8 @@
 package com.upc.ReservaRecursos.Rest;
 
+import com.upc.ReservaRecursos.Entidades.Recurso;
 import com.upc.ReservaRecursos.Entidades.Reserva;
+import com.upc.ReservaRecursos.Entidades.Usuario;
 import com.upc.ReservaRecursos.Negocio.IRecursoNegocio;
 import com.upc.ReservaRecursos.Negocio.IReservaNegocio;
 import com.upc.ReservaRecursos.Negocio.IUsuarioNegocio;
@@ -60,9 +62,11 @@ public class ReservaRest {
         Map<String, Object> response = new HashMap<>();
         try {
             //Se valida si existe el usuario
-            usuarioNegocio.buscar(reserva.getIdUsuario());
+            Usuario usuario = usuarioNegocio.buscar(reserva.getIdUsuario());
+            reserva.setUsuario(usuario);
             //Se valida si existe recurso
-            recursoNegocio.buscar(reserva.getIdRecurso());
+            Recurso recurso = recursoNegocio.buscar(reserva.getIdRecurso());
+            reserva.setRecurso(recurso);
             //Se valida que se reserve maximo 1 hora
             Integer horas = reserva.getHoraFin().getHours() - reserva.getHoraInicio().getHours();
             if(horas!=1)

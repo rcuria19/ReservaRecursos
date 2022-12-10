@@ -31,6 +31,12 @@ public class Reserva {
     @Column(name = "estado_reserva")
     private Integer estado;
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Usuario usuario;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Recurso recurso;
+
     public Reserva() {
     }
 
@@ -98,5 +104,21 @@ public class Reserva {
 
     public void setEstado(Integer estado) {
         this.estado = estado;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Recurso getRecurso() {
+        return recurso;
+    }
+
+    public void setRecurso(Recurso recurso) {
+        this.recurso = recurso;
     }
 }

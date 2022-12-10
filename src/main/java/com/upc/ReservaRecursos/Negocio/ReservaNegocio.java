@@ -41,7 +41,7 @@ public class ReservaNegocio implements IReservaNegocio{
 
     @Override
     public Page<Reserva> consultarReservasUsuario(Integer idUsuario,Pageable pageable) {
-        return iReservaRepositorio.findByIdUsuarioAndEstado(idUsuario,1, pageable);
+        return iReservaRepositorio.findByIdUsuario(idUsuario, pageable);
     }
 
     @Override
